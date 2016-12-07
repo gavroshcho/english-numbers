@@ -47,7 +47,7 @@ class EnglishNumber
   end
 
   def prepend_minus(number)
-    if sign(number) == 1
+    if number >= 0
       ""
     else
       "minus"

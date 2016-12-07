@@ -4,7 +4,7 @@ RSpec.describe EnglishNumber do
   describe "#in_english" do
     it "translate singles" do
       expect(EnglishNumber.new(2).in_english).to eq("two")
-end
+    end
 
     it "translate negative singles" do
       expect(EnglishNumber.new(-2).in_english).to eq("minus two")
@@ -55,7 +55,7 @@ end
     end
 
     it "translate 27.1" do
-      expect(EnglishNumber.new(27.1).in_english).to eq("twenty-seven")
+      expect(EnglishNumber.new(27.1).in_english).to eq("zero")
     end
   end
 end
