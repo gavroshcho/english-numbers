@@ -2,10 +2,10 @@ class EnglishNumber
   TEENS = { 11 => "eleven", 12 => "twelve", 13 => "thirdteen", 14 => "fourteen", 15 => "fifteen",
             16 => "sixteen", 17 => "seventeen", 18 => "eighteen", 19 => "nineteen" }.freeze
 
-  TENS = { 1 => "ten", 2 => "twenty", 3 => "thirty", 4 => "forty", 5 => "fifty", 
+  TENS = { 0 => "zero", 1 => "ten", 2 => "twenty", 3 => "thirty", 4 => "forty", 5 => "fifty", 
            6 => "sixty", 7 => "seventy", 8 => "eighty", 9 => "ninety" }.freeze
 
-  SINGLE = { 0 => "zero", 1 => "one", 2 => "two", 3 => "three", 4 => "four", 5 => "five", 
+  SINGLE = { 1 => "one", 2 => "two", 3 => "three", 4 => "four", 5 => "five", 
              6 => "six", 7 => "seven", 8 => "eight", 9 => "nine" }.freeze
   attr_accessor :number
 
@@ -15,7 +15,6 @@ class EnglishNumber
 
   def in_english
     return nil if number > 99 || number < -99
-    return "zero" if number == 0
 
     numbers_in_english 
   end
@@ -40,7 +39,7 @@ class EnglishNumber
   end
 
   def sign(number)
-    if number > 0
+    if number >= 0
       1
     else
       -1
