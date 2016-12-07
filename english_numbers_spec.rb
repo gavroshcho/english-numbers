@@ -55,7 +55,7 @@ RSpec.describe EnglishNumber do
     end
 
     it "translate 27.1" do
-      expect(EnglishNumber.new(27.1).in_english).to eq("zero")
+      expect(EnglishNumber.new(27.1).in_english).to eq("twenty-seven")
     end
   end
 end
