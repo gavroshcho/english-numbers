@@ -5,68 +5,53 @@ class EnglishNumber
   TENS = { 1 => "ten", 2 => "twenty", 3 => "thirty", 4 => "forty", 5 => "fifty", 
            6 => "sixty", 7 => "seventy", 8 => "eighty", 9 => "ninety" }.freeze
 
-  SINGLE = { 1 => "one", 2 => "two", 3 => "three", 4 => "four", 5 => "five", 
+  SINGLE = { 0 => "zero", 1 => "one", 2 => "two", 3 => "three", 4 => "four", 5 => "five", 
              6 => "six", 7 => "seven", 8 => "eight", 9 => "nine" }.freeze
   attr_accessor :number
 
   def initialize(number)
-    @number = parse_number(number)  
+    @number = remove_decimal_point(number)  
   end
 
   def in_english
     return nil if number > 99 || number < -99
+    return "zero" if number == 0
 
-    if positive?
-      positive_number_in_english
-    else
-      negative_number_in_english 
-    end
+    numbers_in_english 
   end
 
   private 
 
-  def positive?
-    number > 0
-  end
-
-  def positive_number_in_english
-    if number.between?(11, 19)
-      TEENS[number] 
-    elsif number % 10 == 0
-      TENS[number/10]
-    elsif number.between?(21, 99)
-      "#{TENS[number/10]}-#{SINGLE[number%10]}"
-    else
-      SINGLE[number]
-    end
-  end
-
-  def negative_number_in_english
+  def numbers_in_english
     abs_number = number.abs
     if abs_number.between?(11, 19)
-      "minus #{TEENS[abs_number]}"
+      "#{prepend_minus(number)} #{TEENS[abs_number]}".strip
     elsif abs_number % 10 == 0
-      "minus #{TENS[abs_number/10]}"
+      "#{prepend_minus(number)} #{TENS[abs_number/10]}".strip
     elsif abs_number.between?(21, 99)
-      "minus #{TENS[abs_number/10]}-#{SINGLE[abs_number%10]}"
+      "#{prepend_minus(number)} #{TENS[abs_number/10]}-#{SINGLE[abs_number%10]}".strip
     else
-      "minus #{SINGLE[abs_number]}"
+      "#{prepend_minus(number)} #{SINGLE[abs_number]}".strip
     end
   end
 
-  def parse_number(number)
+  def remove_decimal_point(number)
+    number.abs.floor * sign(number)
+  end
+
+  def sign(number)
     if number > 0
-      number.floor
+      1
     else
-      float?(number)
+      -1
     end
   end
 
-  def float?(number)
-    if number.is_a? Float
-      number.floor + 1
+  def prepend_minus(number)
+    if sign(number) == 1
+      ""
     else
-      number
+      "minus"
     end
   end
 end
